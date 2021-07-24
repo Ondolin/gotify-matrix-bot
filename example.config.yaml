@@ -1,3 +1,7 @@
 gotify:
   url: [[ URL ]]
   apiToken: [[ API_TOKEN ]]
+matrix:
+  homeserverURL: [[ MATRIX_HOMESERVER_URL]]
+  username: [[ MATRIX_BOT_USERNAME ]]
+  password: [[ MATRIX_BOT_PASSWORD]]

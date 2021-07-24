@@ -11,6 +11,11 @@ type Config struct {
 		URL      string `yaml:"url"`
 		ApiToken string `yaml:"apiToken"`
 	}
+	Matrix struct {
+		HomeServerURL string `yaml:"homeserverURL"`
+		Username      string `yaml:"username"`
+		Password      string `yaml:"password"`
+	}
 }
 
 func readConf() *Config {
