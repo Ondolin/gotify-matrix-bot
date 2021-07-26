@@ -4,4 +4,6 @@ gotify:
 matrix:
   homeserverURL: [[ MATRIX_HOMESERVER_URL]]
   username: [[ MATRIX_BOT_USERNAME ]]
-  password: [[ MATRIX_BOT_PASSWORD]]
+  password: [[ MATRIX_BOT_PASSWORD ]]
+  token: [[ MATRIX_BOT_API_TOKEN ]]
+  roomID: [[ ID_OF_MATRIX_ROOM ]]
