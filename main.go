@@ -23,7 +23,11 @@ func main() {
 		message := gotify_messages.GetNewMessage()
 
 		if message != nil {
-			matrixClient.Send(message.Message, message.Message)
+			if !config.Configuration.Matrix.Encrypted {
+				matrixClient.Send(message.Message, message.Message)
+			} else {
+				log.Fatal("Encryption is not supported yet. Please disable it.")
+			}
 		}
 	})
 

@@ -18,6 +18,7 @@ type Config struct {
 		Password      string `yaml:"password"`
 		Token         string `yaml:"token"`
 		RoomID        string `yaml:"roomID"`
+		Encrypted     bool   `yaml:"encrypted"`
 	}
 	Debug bool `yaml:"debug"`
 }

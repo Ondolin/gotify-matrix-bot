@@ -8,4 +8,5 @@ matrix:
   password: [[ MATRIX_BOT_PASSWORD ]]
   token: [[ MATRIX_BOT_API_TOKEN ]]
   roomID: [[ ID_OF_MATRIX_ROOM ]]
+  encrypted: [[ NOT_SUPPORTED_YET ]]
 debug: [[ DEBUG_MODE ]]
