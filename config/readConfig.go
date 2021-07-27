@@ -18,6 +18,7 @@ type Config struct {
 		Token         string `yaml:"token"`
 		RoomID        string `yaml:"roomID"`
 	}
+	Debug bool `yaml:"debug"`
 }
 
 func readConf() *Config {

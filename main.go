@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/robfig/cron"
+	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
 	"gotify_matrix_bot/matrix"
 	"log"
@@ -13,14 +14,15 @@ func main() {
 
 	c := cron.New()
 
-	c.AddFunc("0 * * * * *", func() {
+	c.AddFunc("*/10 * * * * *", func() {
 
-		log.Println("Check")
+		if config.Configuration.Debug {
+			log.Println("Check for new Messages")
+		}
 
 		message := gotify_messages.GetNewMessage()
 
 		if message != nil {
-			log.Println(message.Message)
 			matrixClient.Send(message.Message, message.Message)
 		}
 	})

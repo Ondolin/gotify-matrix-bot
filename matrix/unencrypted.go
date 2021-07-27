@@ -31,7 +31,7 @@ func New() *Matrix {
 
 	client, err := gomatrix.NewClient(hs, user, token)
 	if err != nil {
-		log.Println("[Matrix] could not connect to server")
+		log.Println("Could not connect with homeserver", err)
 		panic(err)
 	}
 
@@ -50,12 +50,16 @@ func New() *Matrix {
 	}
 }
 
-func (mx *Matrix) Send(message string, formattedMessage string) error {
-	_, err := mx.Client.SendFormattedText(mx.Room, message, formattedMessage)
-	if err != nil {
-		log.Println("[matrix] cannot send message", err)
-		return err
+func (mx *Matrix) Send(message string, formattedMessage string) {
+
+	if config.Configuration.Debug {
+		log.Println("Send new unencrypted message to matrix server", mx, ". Message content: ", message)
 	}
 
-	return nil
+	_, err := mx.Client.SendFormattedText(mx.Room, message, formattedMessage)
+
+	if err != nil {
+		log.Println("Could not send the message to the matrix server!", err)
+	}
+
 }

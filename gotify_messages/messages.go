@@ -34,6 +34,10 @@ func GetNewMessage() *models.MessageExternal {
 
 	newMessagesCount := len(messages) - ca.ReadMessages
 
+	if config.Configuration.Debug {
+		log.Println("Currently there are ", newMessagesCount, "undelivered messages.")
+	}
+
 	if newMessagesCount < 0 {
 		ca.ReadMessages = len(messages)
 		cache.SetCache(*ca)
