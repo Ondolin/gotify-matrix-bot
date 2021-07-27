@@ -14,7 +14,7 @@ func main() {
 
 	c := cron.New()
 
-	c.AddFunc("*/10 * * * * *", func() {
+	c.AddFunc(config.Configuration.Gotify.PollTime, func() {
 
 		if config.Configuration.Debug {
 			log.Println("Check for new Messages")

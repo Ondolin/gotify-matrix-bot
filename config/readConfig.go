@@ -10,6 +10,7 @@ type Config struct {
 	Gotify struct {
 		URL      string `yaml:"url"`
 		ApiToken string `yaml:"apiToken"`
+		PollTime string `yaml:"pollTime"`
 	}
 	Matrix struct {
 		HomeServerURL string `yaml:"homeserverURL"`

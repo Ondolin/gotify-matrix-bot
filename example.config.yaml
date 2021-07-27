@@ -1,6 +1,7 @@
 gotify:
   url: [[ URL ]]
   apiToken: [[ API_TOKEN ]]
+  pollTime: [[ POLTIME_CRON_JOB e.g. "*/10 * * * * *" for all 10s ]]
 matrix:
   homeserverURL: [[ MATRIX_HOMESERVER_URL]]
   username: [[ MATRIX_BOT_USERNAME ]]
