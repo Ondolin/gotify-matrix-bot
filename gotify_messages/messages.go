@@ -4,6 +4,7 @@ import (
 	"github.com/gotify/go-api-client/v2/auth"
 	"github.com/gotify/go-api-client/v2/gotify"
 	"github.com/gotify/go-api-client/v2/models"
+	"gotify_matrix_bot/cache"
 	"gotify_matrix_bot/config"
 	"log"
 	"net/http"
@@ -25,20 +26,22 @@ func updateMessages() []*models.MessageExternal {
 
 }
 
-var messageCount = 0
-
 func GetNewMessage() *models.MessageExternal {
 
 	messages := updateMessages()
 
-	newMessagesCount := len(messages) - messageCount
+	ca := cache.GetCache()
+
+	newMessagesCount := len(messages) - ca.ReadMessages
 
 	if newMessagesCount < 0 {
-		messageCount = len(messages)
+		ca.ReadMessages = len(messages)
+		cache.SetCache(*ca)
 		log.Println("Possibly some messages got deleted!")
 		return nil
 	} else if newMessagesCount > 0 {
-		messageCount++
+		ca.ReadMessages++
+		cache.SetCache(*ca)
 		return messages[newMessagesCount-1]
 	}
 
