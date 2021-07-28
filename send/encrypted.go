@@ -47,7 +47,7 @@ func Encrypted() {
 	}()
 
 	// Create a store for the e2ee keys. In real apps, use NewSQLCryptoStore instead of NewGobStore.
-	cryptoStore, err := crypto.NewGobStore("test.gob")
+	cryptoStore, err := crypto.NewGobStore("cryptoStore.gob")
 	if err != nil {
 		panic(err)
 	}
