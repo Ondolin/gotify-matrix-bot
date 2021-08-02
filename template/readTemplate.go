@@ -3,7 +3,6 @@ package template
 import (
 	"github.com/gotify/go-api-client/v2/models"
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
@@ -11,7 +10,7 @@ func GetFormattedMessageString(message *models.MessageExternal) string {
 	templateString, err := ioutil.ReadFile("messageTamplate.md")
 
 	if err != nil {
-		log.Fatal(err)
+		return message.Message
 	}
 
 	content := strings.ReplaceAll(string(templateString), "[TITLE]", message.Title)
