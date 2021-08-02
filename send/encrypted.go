@@ -75,18 +75,6 @@ func Encrypted() {
 			panic(err)
 		}
 	}()
-	// Put an internal room ID here, then type text into the program's input to send encrypted messages.
-	// To stop the program, press enter without typing anything
-	/*var sendToRoom id.RoomID = "!internalRoomID:example.com"
-	reader := bufio.NewReader(os.Stdin)
-	for {
-		line, _ := reader.ReadString('\n')
-		line = strings.TrimSpace(line)
-		if line == "" {
-			break
-		}
-		go matrix.SendEncrypted(mach, cli, sendToRoom, line)
-	}*/
 
 	c := cron.New()
 
