@@ -5,6 +5,7 @@ import (
 	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
 	"gotify_matrix_bot/matrix"
+	"gotify_matrix_bot/template"
 	"log"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/id"
@@ -35,7 +36,7 @@ func Unencrypted() {
 		message := gotify_messages.GetNewMessage()
 
 		if message != nil {
-			matrix.SendUnencrypted(cli, id.RoomID(config.Configuration.Matrix.RoomID), message.Message)
+			matrix.SendUnencrypted(cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
 		}
 	})
 
