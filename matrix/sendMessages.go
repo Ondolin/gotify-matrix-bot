@@ -4,6 +4,7 @@ package matrix
 
 import (
 	"fmt"
+	"maunium.net/go/mautrix/format"
 	"strings"
 
 	"maunium.net/go/mautrix"
@@ -74,10 +75,7 @@ func getUserIDs(cli *mautrix.Client, roomID id.RoomID) []id.UserID {
 }
 
 func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) {
-	content := event.MessageEventContent{
-		MsgType: "m.text",
-		Body:    text,
-	}
+	content := format.RenderMarkdown(text, true, true)
 	encrypted, err := mach.EncryptMegolmEvent(roomID, event.EventMessage, content)
 	// These three errors mean we have to make a new Megolm session
 	if err == crypto.SessionExpired || err == crypto.SessionNotShared || err == crypto.NoGroupSession {
