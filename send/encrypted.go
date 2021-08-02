@@ -11,27 +11,17 @@ import (
 	"maunium.net/go/mautrix/crypto"
 	"maunium.net/go/mautrix/event"
 	"maunium.net/go/mautrix/id"
+	"strings"
 )
 
 func Encrypted() {
 
 	log.Println("Encryption active")
 
-	cli, err := mautrix.NewClient(config.Configuration.Matrix.HomeServerURL, "@bot:matrix.ondolin.de", "syt_Ym90_gBxYUIJyjVpThFvaAKmD_1Qa58F")
-	if err != nil {
-		panic(err)
-	}
-
-	// Log in to get access token and device ID.
-	/*_, err = cli.Login(&mautrix.ReqLogin{
-		Type: mautrix.AuthTypeToken,
-		Identifier: mautrix.UserIdentifier{
-			Type: mautrix.IdentifierTypeUser,
-			User: config.Configuration.Matrix.Username,
-		},
-		Token: config.Configuration.Matrix.Token,
-		StoreCredentials: true,
-	})*/
+	cli, err := mautrix.NewClient(
+		config.Configuration.Matrix.HomeServerURL,
+		id.UserID("@"+config.Configuration.Matrix.Username+":"+strings.ReplaceAll(config.Configuration.Matrix.HomeServerURL, "https://", "")),
+		config.Configuration.Matrix.Token)
 	if err != nil {
 		panic(err)
 	}
