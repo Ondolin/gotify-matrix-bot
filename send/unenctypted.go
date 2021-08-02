@@ -19,6 +19,7 @@ func Unencrypted() {
 		config.Configuration.Matrix.HomeServerURL,
 		id.UserID("@"+config.Configuration.Matrix.Username+":"+strings.ReplaceAll(config.Configuration.Matrix.HomeServerURL, "https://", "")),
 		config.Configuration.Matrix.Token)
+
 	if err != nil {
 		panic(err)
 	}
