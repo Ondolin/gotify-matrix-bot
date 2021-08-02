@@ -1,7 +1,6 @@
 package send
 
 import (
-	"fmt"
 	"github.com/robfig/cron"
 	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
@@ -23,16 +22,6 @@ func Unencrypted() {
 	if err != nil {
 		panic(err)
 	}
-
-	// Log out when the program ends (don't do this in real apps)
-	defer func() {
-		fmt.Println("Logging out")
-		resp, err := cli.Logout()
-		if err != nil {
-			fmt.Println("Logout error:", err)
-		}
-		fmt.Println("Logout response:", resp)
-	}()
 
 	c := cron.New()
 

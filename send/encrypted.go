@@ -1,7 +1,6 @@
 package send
 
 import (
-	"fmt"
 	"github.com/robfig/cron"
 	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
@@ -26,23 +25,13 @@ func Encrypted() {
 		panic(err)
 	}
 
-	// Log out when the program ends (don't do this in real apps)
-	defer func() {
-		fmt.Println("Logging out")
-		resp, err := cli.Logout()
-		if err != nil {
-			fmt.Println("Logout error:", err)
-		}
-		fmt.Println("Logout response:", resp)
-	}()
-
 	// Create a store for the e2ee keys. In real apps, use NewSQLCryptoStore instead of NewGobStore.
 	cryptoStore, err := crypto.NewGobStore("cryptoStore.gob")
 	if err != nil {
 		panic(err)
 	}
 
-	mach := crypto.NewOlmMachine(cli, &matrix.FakeLogger{}, cryptoStore, &matrix.FakeStateStore{})
+	mach := crypto.NewOlmMachine(cli, &matrix.Logger{}, cryptoStore, &matrix.FakeStateStore{})
 	// Load data from the crypto store
 	err = mach.Load()
 	if err != nil {
