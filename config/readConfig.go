@@ -15,7 +15,6 @@ type Config struct {
 	Matrix struct {
 		HomeServerURL string `yaml:"homeserverURL"`
 		Username      string `yaml:"username"`
-		Password      string `yaml:"password"`
 		Token         string `yaml:"token"`
 		RoomID        string `yaml:"roomID"`
 		Encrypted     bool   `yaml:"encrypted"`

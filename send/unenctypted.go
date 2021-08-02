@@ -15,21 +15,21 @@ func Unencrypted() {
 
 	log.Println("Encryption inactive")
 
-	cli, err := mautrix.NewClient(config.Configuration.Matrix.HomeServerURL, "", "")
+	cli, err := mautrix.NewClient(config.Configuration.Matrix.HomeServerURL, "bot", "syt_Ym90_gBxYUIJyjVpThFvaAKmD_1Qa58F")
 	if err != nil {
 		panic(err)
 	}
 
 	// Log in to get access token and device ID.
-	_, err = cli.Login(&mautrix.ReqLogin{
-		Type: mautrix.AuthTypePassword,
+	/*_, err = cli.Login(&mautrix.ReqLogin{
+		Type: mautrix.AuthTypeToken,
 		Identifier: mautrix.UserIdentifier{
 			Type: mautrix.IdentifierTypeUser,
 			User: config.Configuration.Matrix.Username,
 		},
-		Password:         config.Configuration.Matrix.Password,
+		Token: config.Configuration.Matrix.Token,
 		StoreCredentials: true,
-	})
+	})*/
 	if err != nil {
 		panic(err)
 	}
