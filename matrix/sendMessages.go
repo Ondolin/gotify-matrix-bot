@@ -4,6 +4,8 @@ package matrix
 
 import (
 	"fmt"
+	"gotify_matrix_bot/config"
+	"log"
 	"maunium.net/go/mautrix/format"
 	"strings"
 
@@ -75,6 +77,11 @@ func getUserIDs(cli *mautrix.Client, roomID id.RoomID) []id.UserID {
 }
 
 func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) {
+
+	if config.Configuration.Debug {
+		log.Println("Sending new unencrypted message")
+	}
+
 	content := format.RenderMarkdown(text, true, true)
 	encrypted, err := mach.EncryptMegolmEvent(roomID, event.EventMessage, content)
 	// These three errors mean we have to make a new Megolm session
@@ -93,4 +100,18 @@ func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomI
 		panic(err)
 	}
 	fmt.Println("Send response:", resp)
+}
+
+func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) {
+
+	if config.Configuration.Debug {
+		log.Println("Sending new unencrypted message")
+	}
+
+	_, err := cli.SendMessageEvent(roomID, event.EventMessage, format.RenderMarkdown(text, true, true))
+
+	if err != nil {
+		panic(err)
+	}
+
 }
