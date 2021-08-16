@@ -6,7 +6,6 @@ import (
 	"gotify_matrix_bot/gotify_messages"
 	"gotify_matrix_bot/matrix"
 	"gotify_matrix_bot/template"
-	"image"
 	"log"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/id"

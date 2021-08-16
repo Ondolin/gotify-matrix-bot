@@ -3,7 +3,6 @@
 package matrix
 
 import (
-	"fmt"
 	"gotify_matrix_bot/config"
 	"log"
 	"maunium.net/go/mautrix"
@@ -13,7 +12,7 @@ import (
 	"maunium.net/go/mautrix/id"
 )
 
-func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) *error {
+func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) (err error) {
 
 	if config.Configuration.Debug {
 		log.Println("Sending new unencrypted message")
@@ -40,13 +39,13 @@ func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomI
 	return nil
 }
 
-func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) *error {
+func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) (err error) {
 
 	if config.Configuration.Debug {
 		log.Println("Sending new unencrypted message")
 	}
 
-	_, err := cli.SendMessageEvent(roomID, event.EventMessage, format.RenderMarkdown(text, true, true))
+	_, err = cli.SendMessageEvent(roomID, event.EventMessage, format.RenderMarkdown(text, true, true))
 
 	if err != nil {
 		return err
