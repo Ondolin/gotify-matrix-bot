@@ -68,7 +68,18 @@ func Encrypted() {
 		message := gotify_messages.GetNewMessage()
 
 		if message != nil {
-			matrix.SendEncrypted(mach, cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
+
+			c.Stop()
+
+			sendErr := matrix.SendEncrypted(mach, cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
+
+			// resend message until it is successful
+			for sendErr != nil {
+				log.Println("Try to resend message...")
+				sendErr = matrix.SendEncrypted(mach, cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
+			}
+
+			c.Start()
 		}
 	})
 

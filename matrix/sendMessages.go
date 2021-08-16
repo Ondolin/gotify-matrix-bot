@@ -13,7 +13,7 @@ import (
 	"maunium.net/go/mautrix/id"
 )
 
-func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) {
+func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomID, text string) *error {
 
 	if config.Configuration.Debug {
 		log.Println("Sending new unencrypted message")
@@ -25,21 +25,22 @@ func SendEncrypted(mach *crypto.OlmMachine, cli *mautrix.Client, roomID id.RoomI
 	if err == crypto.SessionExpired || err == crypto.SessionNotShared || err == crypto.NoGroupSession {
 		err = mach.ShareGroupSession(roomID, getUserIDs(cli, roomID))
 		if err != nil {
-			panic(err)
+			return err
 		}
 		encrypted, err = mach.EncryptMegolmEvent(roomID, event.EventMessage, content)
 	}
 	if err != nil {
-		panic(err)
+		return err
 	}
-	resp, err := cli.SendMessageEvent(roomID, event.EventEncrypted, encrypted)
+	_, err = cli.SendMessageEvent(roomID, event.EventEncrypted, encrypted)
 	if err != nil {
-		panic(err)
+		return err
 	}
-	fmt.Println("Send response:", resp)
+
+	return nil
 }
 
-func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) {
+func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) *error {
 
 	if config.Configuration.Debug {
 		log.Println("Sending new unencrypted message")
@@ -48,7 +49,9 @@ func SendUnencrypted(cli *mautrix.Client, roomID id.RoomID, text string) {
 	_, err := cli.SendMessageEvent(roomID, event.EventMessage, format.RenderMarkdown(text, true, true))
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 
 }
