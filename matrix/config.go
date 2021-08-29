@@ -2,6 +2,7 @@ package matrix
 
 import (
 	"fmt"
+	"gotify_matrix_bot/config"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/crypto"
 	"maunium.net/go/mautrix/event"
@@ -9,7 +10,6 @@ import (
 	"strings"
 )
 
-// Simple crypto.StateStore implementation that says all rooms are encrypted.
 type FakeStateStore struct{}
 
 var _ crypto.StateStore = &FakeStateStore{}
@@ -30,7 +30,7 @@ func (fss *FakeStateStore) FindSharedRooms(userID id.UserID) []id.RoomID {
 	return []id.RoomID{}
 }
 
-// Simple crypto.Logger implementation that just prints to stdout.
+// Simple crypto.Logger implementation that prints to stdout.
 type Logger struct{}
 
 var _ crypto.Logger = &Logger{}
@@ -44,10 +44,18 @@ func (f Logger) Warn(message string, args ...interface{}) {
 }
 
 func (f Logger) Debug(message string, args ...interface{}) {
+	if !config.Configuration.Debug {
+		return
+	}
+
 	fmt.Printf("[DEBUG] "+message+"\n", args...)
 }
 
 func (f Logger) Trace(message string, args ...interface{}) {
+	if !config.Configuration.Debug {
+		return
+	}
+
 	if strings.HasPrefix(message, "Got membership state event") {
 		return
 	}
