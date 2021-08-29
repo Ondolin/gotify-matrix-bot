@@ -9,7 +9,6 @@ import (
 	"log"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/id"
-	"strings"
 )
 
 func Unencrypted() {
@@ -18,7 +17,7 @@ func Unencrypted() {
 
 	cli, err := mautrix.NewClient(
 		config.Configuration.Matrix.HomeServerURL,
-		id.UserID("@"+config.Configuration.Matrix.Username+":"+strings.ReplaceAll(config.Configuration.Matrix.HomeServerURL, "https://", "")),
+		id.UserID("@"+config.Configuration.Matrix.Username+":"+config.Configuration.Matrix.MatrixDomain),
 		config.Configuration.Matrix.Token)
 
 	if err != nil {

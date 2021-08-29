@@ -4,6 +4,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
+	"strings"
 )
 
 type Config struct {
@@ -14,6 +15,7 @@ type Config struct {
 	}
 	Matrix struct {
 		HomeServerURL string `yaml:"homeserverURL"`
+		MatrixDomain  string `yaml:"matrixDomain"`
 		Username      string `yaml:"username"`
 		Token         string `yaml:"token"`
 		RoomID        string `yaml:"roomID"`
@@ -31,7 +33,11 @@ func readConf() *Config {
 	c := &Config{}
 	err = yaml.Unmarshal(buf, c)
 	if err != nil {
-		log.Fatal("Could not load config.", err)
+		log.Fatal("Could not parse config. ", err)
+	}
+
+	if c.Matrix.MatrixDomain == "" {
+		c.Matrix.MatrixDomain = strings.ReplaceAll(c.Matrix.HomeServerURL, "https://", "")
 	}
 
 	return c

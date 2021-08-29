@@ -4,6 +4,7 @@ gotify:
   pollTime: [[ POLTIME_CRON_JOB e.g. "*/10 * * * * *" for all 10s ]]
 matrix:
   homeserverURL: [[ MATRIX_HOMESERVER_URL]]
+  matrixDomain: [[ @bot:[this] ]]
   username: [[ MATRIX_BOT_USERNAME ]]
   token: [[ MATRIX_BOT_API_TOKEN ]]
   roomID: [[ ID_OF_MATRIX_ROOM ]]
