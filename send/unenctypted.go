@@ -52,6 +52,6 @@ func Unencrypted() {
 
 	c.Start()
 
-	for true {
+	select {
 	}
 }
