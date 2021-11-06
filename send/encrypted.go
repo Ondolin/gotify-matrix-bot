@@ -84,6 +84,6 @@ func Encrypted() {
 
 	c.Start()
 
-	for true {
+	select {
 	}
 }
