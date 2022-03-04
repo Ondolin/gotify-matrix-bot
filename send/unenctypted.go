@@ -1,7 +1,6 @@
 package send
 
 import (
-	"github.com/robfig/cron"
 	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
 	"gotify_matrix_bot/matrix"
@@ -24,34 +23,14 @@ func Unencrypted() {
 		panic(err)
 	}
 
-	c := cron.New()
+	gotify_messages.OnNewMessage(func(message string) {
 
-	c.AddFunc(config.Configuration.Gotify.PollTime, func() {
-
-		if config.Configuration.Debug {
-			log.Println("Check for new Messages")
+		err := matrix.SendUnencrypted(cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
+		if err != nil {
+			log.Fatal("Could not send encrypted message to matrix. ", err)
 		}
 
-		message := gotify_messages.GetNewMessage()
-
-		if message != nil {
-
-			c.Stop()
-
-			sendErr := matrix.SendUnencrypted(cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
-
-			// resend message until it is successful
-			for sendErr != nil {
-				log.Println("Try to resend message...")
-				sendErr = matrix.SendUnencrypted(cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
-			}
-
-			c.Start()
-		}
 	})
 
-	c.Start()
-
-	select {
-	}
+	select {}
 }

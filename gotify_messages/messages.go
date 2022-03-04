@@ -11,6 +11,12 @@ import (
 	"net/url"
 )
 
+/*
+
+This code is deprecated. It was replaced with the websocket functionality, and is kept for reference reasons
+
+*/
+
 var myURL, _ = url.Parse(config.Configuration.Gotify.URL)
 var client = gotify.NewClient(myURL, &http.Client{})
 var authToken = auth.TokenAuth(config.Configuration.Gotify.ApiToken)
