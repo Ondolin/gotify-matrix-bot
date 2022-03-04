@@ -11,7 +11,6 @@ type Config struct {
 	Gotify struct {
 		URL      string `yaml:"url"`
 		ApiToken string `yaml:"apiToken"`
-		PollTime string `yaml:"pollTime"`
 	}
 	Matrix struct {
 		HomeServerURL string `yaml:"homeserverURL"`
@@ -40,6 +39,10 @@ func readConf() *Config {
 		c.Matrix.MatrixDomain = strings.ReplaceAll(c.Matrix.HomeServerURL, "https://", "")
 	}
 
+	// The gotify url should not contain a schema
+	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "http://", "")
+	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "https://", "")
+
 	return c
 }
 
@@ -53,10 +56,6 @@ func checkValues(config *Config) {
 
 	if config.Gotify.ApiToken == "" {
 		log.Fatal("No gotify api token specified.")
-	}
-
-	if config.Gotify.PollTime == "" {
-		log.Fatal("No gotify polltime specified.")
 	}
 
 	if config.Matrix.HomeServerURL == "" {
