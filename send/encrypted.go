@@ -4,6 +4,7 @@ import (
 	"gotify_matrix_bot/config"
 	"gotify_matrix_bot/gotify_messages"
 	"gotify_matrix_bot/matrix"
+	"gotify_matrix_bot/template"
 	"log"
 	"maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/crypto"
@@ -56,7 +57,7 @@ func Encrypted() {
 
 	gotify_messages.OnNewMessage(func(message string) {
 
-		err := matrix.SendEncrypted(mach, cli, id.RoomID(config.Configuration.Matrix.RoomID), message)
+		err := matrix.SendEncrypted(mach, cli, id.RoomID(config.Configuration.Matrix.RoomID), template.GetFormattedMessageString(message))
 		if err != nil {
 			log.Fatal("Could not send encrypted message to matrix. ", err)
 		}
