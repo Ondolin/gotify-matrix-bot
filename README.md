@@ -1,6 +1,6 @@
 # Gotify matrix bot
 
-This small program allows you to get any gotify push nodifications in a matrix chat.
+This small program allows you to get any gotify push notifications in a matrix chat.
 
 ## Installation
 
