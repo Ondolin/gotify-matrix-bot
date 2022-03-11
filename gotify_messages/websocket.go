@@ -7,11 +7,17 @@ import (
 	"net/url"
 )
 
-var websocketURL = url.URL{Scheme: "wss", Host: config.Configuration.Gotify.URL, Path: "/stream", RawQuery: "token=" + config.Configuration.Gotify.ApiToken}
+var websocketURL, urlError = url.Parse("wss://" + config.Configuration.Gotify.URL + "/stream?token=" + config.Configuration.Gotify.ApiToken)
 
 type callbackFunction func(string)
 
 func OnNewMessage(callback callbackFunction) {
+
+	if urlError != nil {
+		log.Fatal("Error while trying to cast as url: ",
+			"wss://"+config.Configuration.Gotify.URL+"/stream?token="+config.Configuration.Gotify.ApiToken, " ",
+			urlError)
+	}
 
 	c, _, err := websocket.DefaultDialer.Dial(websocketURL.String(), nil)
 	if err != nil {
