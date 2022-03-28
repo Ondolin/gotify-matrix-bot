@@ -44,7 +44,10 @@ func readConf() *Config {
 	// the scheme is replaced with the appropriate websocket scheme.
 	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "http://", "ws://")
 	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "https://", "wss://")
-
+	// set default wss scheme for backward compatibility
+	if !strings.HasPrefix(c.Gotify.URL, "ws") {
+		c.Gotify.URL = "wss://" + c.Gotify.URL
+	}
 	return c
 }
 
