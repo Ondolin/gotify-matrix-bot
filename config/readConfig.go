@@ -1,10 +1,11 @@
 package config
 
 import (
-	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
 	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
@@ -39,10 +40,14 @@ func readConf() *Config {
 		c.Matrix.MatrixDomain = strings.ReplaceAll(c.Matrix.HomeServerURL, "https://", "")
 	}
 
-	// The gotify url should not contain a schema
-	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "http://", "")
-	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "https://", "")
-
+	// As the websocket connection for connecting to gotify is used,
+	// the scheme is replaced with the appropriate websocket scheme.
+	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "http://", "ws://")
+	c.Gotify.URL = strings.ReplaceAll(c.Gotify.URL, "https://", "wss://")
+	// set default wss scheme for backward compatibility
+	if !strings.HasPrefix(c.Gotify.URL, "ws") {
+		c.Gotify.URL = "wss://" + c.Gotify.URL
+	}
 	return c
 }
 
