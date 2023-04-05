@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.16-alpine3.14 AS builder
+FROM golang:alpine AS builder
 
 RUN apk add --no-cache git ca-certificates build-base su-exec olm-dev
 
